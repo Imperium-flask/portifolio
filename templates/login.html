@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Portfólio de Desenvolvedor</title>
+    <link rel="icon" href="static/uploads/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body class="login">
+    <div class="login-container">
+        <h2>Login</h2>
+        <br>
+        <form method="POST">
+            <input class="input-login" type="text" name="email" placeholder="Email" required>
+            <input class="input-login" type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        {% if not conta_existente %}
+        <br><br>
+        <a href="/sign_up" style="text-decoration: none;">Crie sua conta</a>
+        {% endif %}
+        <br><br>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <div>
+            <a href="/" style="text-decoration: none;">Voltar</a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfólio de Desenvolvedor de Software">
+    <title>Portfólio de Desenvolvedor</title>
+    <link rel="icon" href="static/uploads/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        {% if info.foto %}
+        <img src="{{ url_for('static', filename='uploads/' + info.foto) }}" alt="Foto do Usuário" class="header-foto">
+        {% else %}
+        <img src="static/uploads/avatar.png" alt="Foto do Usuário" class="header-foto">
+        {% endif %}
+        <div class="foto-e-titulo">
+            <h1>{{ info.nome if info.nome else "Seu nome aqui" }}</h1>
+            <p>Sou um desenvolvedor de software apaixonado por tecnologia e inovação.</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="#sobre">Sobre</a>
+        <a href="#curriculo">Currículo</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#contato">Contato</a>
+        {% if current_user.is_authenticated %}
+        <a href="/dashboard/{{ current_user.id }}">Dashboard</a>
+        <a href="/logout" style="position: absolute; margin-left: 90%;" >Logout</a>
+        {% else %}
+        <a href="/login" style="position: absolute; margin-left: 90%;">Login</a>
+        {% endif %}
+    </nav>
+
+    <!-- About Section -->
+    <section id="sobre">
+        <div class="container">
+            <h2>Sobre Mim</h2>
+            <p class="preserve-format">{{ info.bio if info.bio else "Sou um desenvolvedor de software apaixonado por tecnologia e inovação." }}</p>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="curriculo">
+        <div class="container">
+            <h2>Currículo</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <h3>Experiência</h3>
+                    <p class="preserve-format">{{ curriculo.experiencia if curriculo.experiencia else "Preencha suas experiências profissionais!" }}</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Educação</h3>
+                    <p class="preserve-format">{{ curriculo.educacao if curriculo.educacao else "Preencha seu grau de escolaridade!" }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projetos">
+        <div class="container">
+            <h2>Projetos</h2>
+            <div class="grid">
+                {% for projeto in projetos %}
+                <div class="grid-item">
+                    <h3>{{ projeto.titulo }}</h3>
+                    <p class="preserve-format">{{ projeto.descricao }}</p>
+                </div>
+                {% else %}
+                <div class="grid-item">
+                    <p>Nenhum projeto disponível.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato">
+        <div class="container">
+            <h2>Contato</h2>
+            <p>Entre em contato comigo para discutir oportunidades de colaboração ou apenas para bater um papo sobre tecnologia.</p>
+            <p>Email: <a href="mailto:seuemail@dominio.com">{{ contato.email }}</a></p>
+            <p>Telefone: {{ contato.telefone }}</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>Feito com ❤️ por {{ info.nome if info.nome else "Seu nome aqui" }}.</p>
+        <p><a href="https://www.linkedin.com/in/seu-perfil" target="_blank">LinkedIn</a> | <a href="https://github.com/seu-usuario" target="_blank">GitHub</a></p>
+    </footer>
+
+</body>
+
+</html>

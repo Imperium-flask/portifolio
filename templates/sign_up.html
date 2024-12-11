@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - Portfólio de Desenvolvedor</title>
+    <link rel="icon" href="static/uploads/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body class="login">
+    <div class="login-container">
+        <h2>Criar Conta</h2>
+        <br>
+        <form method="POST">
+            <input class="input-login" type="text" name="nome" placeholder="Nome Completo" required>
+            <input class="input-login" type="email" name="email" placeholder="Email" required>
+            <input class="input-login" type="password" name="senha" placeholder="Senha" required>
+            <input class="input-login" type="password" name="confirmar_senha" placeholder="Confirmar Senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

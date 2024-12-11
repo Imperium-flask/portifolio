@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Administração - Portfólio</title>
+    <link rel="icon" href="../static/uploads/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body>
+    <header>
+        <div>
+            <h1>Painel de Administração</h1>
+            <p>Preencha suas informações e gerencie seus projetos</p>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="/" style="margin-left: 70%;">Ver Portfólio</a>
+        <a href="/logout">Logout</a>
+    </nav>
+
+    <div class="container">
+        <!-- Informações Pessoais -->
+        <section>
+            <h2 class="section-title">Informações Pessoais</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-control">
+                    <input type="text" name="nome" placeholder="Nome Completo"
+                        value="{{ info.nome if info.nome else '' }}" required>
+                </div>
+                <div class="form-control">
+                    <textarea name="bio" placeholder="Biografia" rows="4"
+                        required>{{ info.bio if info.bio else '' }}</textarea>
+                </div>
+                <div>
+                    <label for="foto">Carregar Foto:</label>
+                    <input type="file" name="foto" accept="image/*">
+                </div>
+                <button type="submit" name="editar_info">Salvar Informações Pessoais</button>
+            </form>
+        </section>
+
+        <!-- Currículo -->
+        <section>
+            <h2 class="section-title">Currículo</h2>
+            <form method="POST">
+                <div class="form-control">
+                    <textarea name="experiencia" placeholder="Experiência" rows="4"
+                        required>{{ curriculo.experiencia if curriculo.experiencia else '' }}</textarea>
+                </div>
+                <div class="form-control">
+                    <textarea name="educacao" placeholder="Educação" rows="4"
+                        required>{{ curriculo.educacao if curriculo.educacao else '' }}</textarea>
+                </div>
+                <button type="submit" name="editar_curriculo">Salvar Currículo</button>
+            </form>
+        </section>
+
+        <!-- Contato -->
+        <section>
+            <h2 class="section-title">Contato</h2>
+            <form method="POST">
+                <div class="form-control">
+                    <input type="email" name="email" placeholder="Email"
+                        value="{{ contato.email if contato.email else '' }}" required>
+                </div>
+                <div class="form-control">
+                    <input type="text" name="telefone" placeholder="Telefone"
+                        value="{{ contato.telefone if contato.telefone else '' }}" required>
+                </div>
+                <button type="submit" name="editar_contato">Salvar Contato</button>
+            </form>
+        </section>
+
+        <!-- Adicionar Projeto -->
+        <section>
+            <h2 class="section-title">Projetos</h2>
+            <form method="POST">
+                <div class="form-control">
+                    <input type="text" name="titulo" placeholder="Nome do Projeto" required>
+                </div>
+                <div class="form-control">
+                    <textarea name="descricao" placeholder="Descrição do Projeto" rows="10" required></textarea>
+                </div>
+                <button type="submit" name="adicionar_projeto">Adicionar Projeto</button>
+            </form>
+        </section>
+
+        <!-- Lista de Projetos -->
+        <div class="project-list">
+            {% for projeto in projetos %}
+            <div class="project-item">
+                <!-- Formulário de Edição -->
+                <form method="POST" action="/editar_projeto/{{ projeto.id }}" class="form-projeto">
+                    <input type="hidden" name="projeto_id" value="{{ projeto.id }}">
+
+                    <label for="nome_projeto">Nome do Projeto</label>
+                    <input type="text" id="titulo" name="titulo" value="{{ projeto.titulo }}" required>
+
+                    <label for="descricao">Descrição</label>
+                    <textarea id="descricao" name="descricao" required>{{ projeto.descricao }}</textarea>
+
+                    <!-- Botão Editar -->
+                    <div class="buttons-group">
+                        <button type="submit" name="editar_projeto" class="btn-edit">Salvar Alterações</button>
+                    </div>
+                </form>
+
+                <!-- Formulário de Deletar -->
+                <form method="POST" action="/deletar_projeto/{{ projeto.id }}" class="form-delete">
+                    <div class="buttons-group">
+                        <button type="submit" name="deletar_projeto" class="btn-delete">Deletar Projeto</button>
+                    </div>
+                </form>
+            </div>
+            {% else %}
+            <p>Nenhum projeto encontrado.</p>
+            {% endfor %}
+        </div>
+
+        <footer style="position: absolute; width: 100%; left: 0;">
+            <p>Feito com ❤️ por {{ info.nome }}</p>
+        </footer>
+</body>
+
+</html>
